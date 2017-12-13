@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.java.dao.ContentDao">
+    <resultMap id="contentMap" type="com.xiaowo.Content">
+        <result column="id" jdbcType="INTEGER" property="id"/>
+        <result column="editor" jdbcType="VARCHAR" property="editor"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="short_title" jdbcType="VARCHAR" property="shortTitle"/>
+        <result column="category_id" jdbcType="INTEGER" property="categoryId"/>
+        <result column="category" jdbcType="INTEGER" property="category"/>
+        <result column="text_id" jdbcType="INTEGER" property="textId"/>
+        <result column="tags" jdbcType="VARCHAR" property="tags"/>
+        <result column="zone_id" jdbcType="INTEGER" property="zoneId"/>
+        <result column="pic_id" jdbcType="INTEGER" property="picId"/>
+        <result column="type_id" jdbcType="INTEGER" property="typeId"/>
+        <result column="recommend" jdbcType="VARCHAR" property="recommend"/>
+        <result column="decorate_money" jdbcType="VARCHAR" property="decorateMoney"/>
+        <result column="decorate_time" jdbcType="VARCHAR" property="decorateTime"/>
+        <result column="month_repayment" jdbcType="VARCHAR" property="monthRepayment"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+        <result column="app_pc" jdbcType="VARCHAR" property="client"/>
+        <result column="active_time" jdbcType="VARCHAR" property="activeTime"/>
+        <result column="cooperative_business" jdbcType="VARCHAR" property="cooperativeBusiness"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <association property="contentType" javaType="com.xiaowo.ContentType">
+
+            <id property="id" column="type_id"/>
+            <result property="type" column="type"/>
+
+        </association>
+    </resultMap>
+
+    <insert id="insertContent" keyProperty="id" useGeneratedKeys="true">
+        insert into
+        cms_content(editor,title,short_title,category_id,text_id,tags,zone_id,pic_id,type_id,recommend,decorate_money,decorate_time,month_repayment,status,create_time,app_pc,active_time,cooperative_business)
+        VALUES
+        (#{editor},#{title},#{shortTitle},#{categoryId},#{textId},#{tags},#{zoneId},#{picId},#{typeId},#{recommend},#{decorateMoney},#{decorateTime},#{monthRepayment},'1',now(),#{client},#{activeTime},#{cooperativeBusiness})
+    </insert>
+
+    <select id="findContentByCategoryId" resultMap="contentMap">
+        SELECT
+        a.*, b.`name` AS category,c.type as type
+        FROM
+        cms_content a
+        LEFT JOIN website_menu b ON a.category_id = b.id
+        left join cms_content_type c on a.type_id = c.id
+        WHERE
+        category_id = #{categoryId}
+        AND a.STATUS != '0'
+    </select>
+
+    <select id="findContents" resultMap="contentMap">
+        SELECT
+        a.*, b.`name` AS category,c.type as type
+        FROM
+        cms_content a
+        LEFT JOIN website_menu b ON a.category_id = b.id
+        left join cms_content_type c on a.type_id = c.id
+        WHERE
+        a.app_pc=#{client}
+        AND a.STATUS != '0' limit 200
+    </select>
+
+    <select id="findZones" resultType="com.xiaowo.Zone">
+        select * from cms_city
+    </select>
+
+    <select id="findContentById" resultMap="contentMap">
+        select * from cms_content where id=#{id}
+    </select>
+
+    <update id="updateContent">
+        update cms_content set update_time=now()
+        <if test="title!=null and title!=''">
+            ,title=#{title}
+        </if>
+        <if test="shortTitle!=null and shortTitle!=''">
+            ,short_title=#{shortTitle}
+        </if>
+        <if test="tags!=null and tags!=''">
+            ,tags=#{tags}
+        </if>
+        <if test="zoneId!=null">
+            ,zone_id=#{zoneId}
+        </if>
+        <if test="picId!=null">
+            ,pic_id=#{picId}
+        </if>
+        <if test="typeId!=null">
+            ,type_id=#{typeId}
+        </if>
+        <if test="recommend!=null and recommend!=''">
+            ,recommend=#{recommend}
+        </if>
+        <if test="decorateMoney!=null and decorateMoney!=''">
+            ,decorate_money=#{decorateMoney}
+        </if>
+        <if test="decorateTime!=null and decorateTime!=''">
+            ,decorate_time=#{decorateTime}
+        </if>
+        <if test="monthRepayment!=null and monthRepayment!=''">
+            ,month_repayment=#{monthRepayment}
+        </if>
+        <if test="activeTime!=null and activeTime!=''">
+            ,active_time=#{activeTime}
+        </if>
+        <if test="cooperativeBusiness!=null and cooperativeBusiness!=''">
+            ,cooperative_business=#{cooperativeBusiness}
+        </if>
+        where id=#{id}
+    </update>
+
+    <update id="updateContentStatus">
+        update cms_content set status=#{status} where id=#{id}
+    </update>
+</mapper>

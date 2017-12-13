@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!-- 基础设置 -->
+    <settings>
+        <!-- changes from the defaults，全局启用或禁用延迟加载。当禁用时，所有关联对象都会即时加载。 -->
+        <setting name="lazyLoadingEnabled" value="false"/>
+        <!--开启自动映射-->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+
+    </settings>
+
+    <!-- 映射map -->
+    <mappers>
+        <mapper resource="mapper/AccountMapper.xml"/>
+        <mapper resource="mapper/MenuMapper.xml"/>
+        <mapper resource="mapper/MenuPermissionMapper.xml"/>
+        <mapper resource="mapper/RoleMapper.xml"/>
+        <mapper resource="mapper/AccountRoleMapper.xml"/>
+        <mapper resource="mapper/FriendLinkMapper.xml"/>
+        <mapper resource="mapper/ProblemCategoryMapper.xml"/>
+        <mapper resource="mapper/ProblemMapper.xml"/>
+        <mapper resource="mapper/WebsiteMenuMapper.xml"/>
+        <mapper resource="mapper/TagMapper.xml"/>
+        <mapper resource="mapper/ContentTypeMapper.xml"/>
+        <mapper resource="mapper/PictureMapper.xml"/>
+        <mapper resource="mapper/TextMapper.xml"/>
+        <mapper resource="mapper/ContentMapper.xml"/>
+        <mapper resource="mapper/FeedbackMapper.xml"/>
+        <mapper resource="mapper/DepartmentMapper.xml"/>
+        <mapper resource="mapper/PositionMapper.xml"/>
+        <mapper resource="mapper/RecruitMapper.xml"/>
+        <mapper resource="mapper/ZoneMapper.xml"/>
+        <mapper resource="mapper/ApplyCountMapper.xml"/>
+    </mappers>
+</configuration>

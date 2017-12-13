@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.java.dao.MenuPermissionDao">
+    <resultMap id="permissionMap" type="com.xiaowo.MenuPermission">
+        <result column="id" jdbcType="INTEGER" property="id"/>
+        <result column="role_id" jdbcType="INTEGER" property="roleId"/>
+        <result column="menu_id" jdbcType="INTEGER" property="menuId"/>
+    </resultMap>
+
+    <insert id="insertPermission" parameterType="com.xiaowo.MenuPermission">
+        insert into role_menu (role_id,menu_id,create_time) VALUES
+        (#{roleId},#{menuId},now())
+    </insert>
+
+    <select id="findPermissionByRoleId" resultMap="permissionMap">
+        select * from role_menu where role_id=#{roleId}
+    </select>
+
+    <delete id="removePermission">
+        delete from role_menu where role_id=#{roleId} and menu_id=#{menuId}
+    </delete>
+
+</mapper>

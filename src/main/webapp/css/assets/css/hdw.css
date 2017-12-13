@@ -1,0 +1,23 @@
+/* CSS Document */
+.content select {
+    width: 170px;
+    height: 167px;
+    padding: 5px;
+}
+
+.content {
+    float: left;
+    text-align: center;
+    margin-right: 10px;
+}
+
+.content span {
+    display: block;
+    width: 170px;
+    background: #eee;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    padding: 5px 0;
+    margin: 5px 0;
+}
+

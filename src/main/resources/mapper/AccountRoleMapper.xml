@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.java.dao.AccountRoleDao">
+    <resultMap id="accountRoleMap" type="com.xiaowo.AccountRole">
+        <result column="id" jdbcType="INTEGER" property="id"/>
+        <result column="user_id" jdbcType="INTEGER" property="userId"/>
+        <result column="role_id" jdbcType="INTEGER" property="roleId"/>
+    </resultMap>
+
+    <insert id="insertAccountRole">
+        insert into user_role (role_id,user_id) VALUES
+        (#{roleId},#{userId})
+    </insert>
+
+    <select id="findAccountRoleByUserId" resultMap="accountRoleMap">
+        select * from user_role where user_id=#{userId}
+    </select>
+
+    <delete id="removeAccountRole">
+        delete from user_role where role_id=#{roleId} and user_id=#{userId}
+    </delete>
+
+</mapper>

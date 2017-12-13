@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.java.dao.TagDao">
+    <resultMap id="tagMap" type="com.xiaowo.Tag">
+        <result column="id" jdbcType="INTEGER" property="id"/>
+        <result column="tag" jdbcType="VARCHAR" property="tag"/>
+        <result column="reference_count" jdbcType="INTEGER" property="referenceCount"/>
+    </resultMap>
+
+    <insert id="insertTag" keyProperty="id" useGeneratedKeys="true">
+        insert into cms_tag(tag,reference_count) VALUES (#{tag},#{referenceCount})
+    </insert>
+
+    <select id="findTagByTag" resultMap="tagMap">
+        select * from cms_tag where tag=#{tag} limit 1
+    </select>
+
+    <update id="updateTagReferenceCount">
+        UPDATE cms_tag set reference_count=#{referenceCount} where id=#{id}
+    </update>
+
+    <select id="findTagById" resultMap="tagMap">
+        select * from cms_tag where id=#{id}
+    </select>
+</mapper>

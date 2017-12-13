@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.java.dao.AccountDao">
+    <resultMap id="accountMap" type="com.xiaowo.Account">
+        <result column="id" jdbcType="INTEGER" property="id"/>
+        <result column="uuid" jdbcType="VARCHAR" property="uuid"/>
+        <result column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="realname" jdbcType="VARCHAR" property="realName"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+    </resultMap>
+
+    <insert id="insertAccount" parameterType="com.xiaowo.Account" keyProperty="id" useGeneratedKeys="true">
+        insert into account (uuid,username,realname,password,status,create_time) VALUES
+        (#{uuid},#{username},#{realName},#{password},'1',now())
+    </insert>
+
+    <select id="findAccountById" resultMap="accountMap">
+        select * from account where id=#{id}
+    </select>
+
+    <select id="findAccountByUsername" resultMap="accountMap">
+        select * from account where username=#{username}
+    </select>
+
+    <select id="findAllAccount" resultMap="accountMap">
+        select * from account where status='1'
+    </select>
+
+    <update id="unSubscribeById">
+        update account set status='0' where id=#{id}
+    </update>
+
+    <update id="updatePasswordById">
+        update account set password=#{password},update_time=now() where id=#{id}
+    </update>
+
+    <delete id="deleteAccount">
+        delete from account where id=#{id}
+    </delete>
+
+    <update id="updateAccount">
+        update account set update_time=now()
+        <if test="username!=null and username!=''">
+            ,username=#{username}
+        </if>
+        <if test="realName!=null and realName!=''">
+            ,real_name=#{realName}
+        </if>
+        where id=#{id}
+    </update>
+
+    <select id="findBindUserByRoleId" resultMap="accountMap">
+        select a.* from account a LEFT JOIN user_role b on a.id=b.user_id where b.role_id=#{roleId}
+    </select>
+
+    <select id="findNoBindUser" resultMap="accountMap">
+        select * from account where id not in(select user_id from user_role where status='1')
+    </select>
+</mapper>

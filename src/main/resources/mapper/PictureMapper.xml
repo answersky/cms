@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.java.dao.PictureDao">
+    <resultMap id="picMap" type="com.xiaowo.Picture">
+        <result column="id" jdbcType="INTEGER" property="id"/>
+        <result column="path" jdbcType="VARCHAR" property="path"/>
+        <result column="url" jdbcType="VARCHAR" property="url"/>
+        <result column="description" jdbcType="VARCHAR" property="description"/>
+    </resultMap>
+
+    <insert id="insertPicture" keyProperty="id" useGeneratedKeys="true">
+        insert into cms_pic(path,url,description,create_time) VALUES (#{path},#{url},#{description},now())
+    </insert>
+
+    <select id="findPictureById" resultMap="picMap">
+        select * from cms_pic where id=#{id}
+    </select>
+
+    <update id="updatePicture">
+        update cms_pic set update_time=now()
+        <if test="url!=null and url!=''">
+            ,url=#{url}
+        </if>
+        <if test="description!=null and description=''">
+            ,description=#{description}
+        </if>
+        where id=#{id}
+    </update>
+
+</mapper>

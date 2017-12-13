@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.java.dao.ContentTypeDao">
+    <resultMap id="ctMap" type="com.xiaowo.ContentType">
+        <result column="id" jdbcType="INTEGER" property="id"/>
+        <result column="type" jdbcType="VARCHAR" property="type"/>
+        <result column="width" jdbcType="INTEGER" property="width"/>
+        <result column="height" jdbcType="INTEGER" property="height"/>
+        <result column="has_img" jdbcType="VARCHAR" property="hasImg"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+    </resultMap>
+
+    <select id="findContentTypes" resultMap="ctMap">
+        select * from cms_content_type where status='1'
+    </select>
+
+    <select id="findContentTypeById" resultMap="ctMap">
+        select * from cms_content_type where id=#{id}
+    </select>
+
+</mapper>

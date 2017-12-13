@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.java.dao.ZoneDao">
+    <resultMap id="zoneMap" type="com.xiaowo.Zone">
+        <result column="id" jdbcType="INTEGER" property="id"/>
+        <result column="zone" jdbcType="VARCHAR" property="zone"/>
+    </resultMap>
+
+    <insert id="insertZone">
+        insert into cms_city (zone,create_time) VALUES
+        (#{zone},now())
+    </insert>
+
+    <select id="findZones" resultMap="zoneMap">
+        select * from cms_city
+    </select>
+
+    <select id="findZoneById" resultMap="zoneMap">
+        select * from cms_city where id=#{id}
+    </select>
+
+    <select id="findZoneByZone" resultMap="zoneMap">
+        select * from cms_city where zone=#{zone} limit 1
+    </select>
+
+    <update id="updateZone">
+        update cms_city
+        <set>
+            <if test="zone!=null and zone!=''">
+                zone=#{zone},
+            </if>
+            update_time=now()
+        </set>
+        where id=#{id}
+    </update>
+
+
+    <delete id="deleteZone">
+       DELETE from cms_city where id=#{id}
+    </delete>
+</mapper>
